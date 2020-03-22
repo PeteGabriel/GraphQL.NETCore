@@ -1,14 +1,14 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using GraphApiNetCore.GraphQL;
+using GraphApiNetCore.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using GraphQL;
+using GraphQL.Server;
+using GraphQL.Server.Ui.Playground;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace GraphApiNetCore
@@ -25,7 +25,23 @@ namespace GraphApiNetCore
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddMvc();
+            services.AddDbContext<CarvedRockDbContext>(options =>
+                options.UseSqlServer(Configuration["ConnectionStrings:CarvedRock"]));
+
+            services.AddScoped<IDependencyResolver>(s => new FuncDependencyResolver(s.GetRequiredService));
+            services.AddScoped<CarvedRockSchema>();
+            
+            services.AddScoped<ProductRepository>();
+            
+            services.AddLogging(builder => builder.AddConsole());
+            
+            services.AddGraphQL(options =>
+                {
+                    options.EnableMetrics = true;
+                    options.ExposeExceptions = true;
+                })
+                .AddGraphTypes(ServiceLifetime.Scoped);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -35,14 +51,8 @@ namespace GraphApiNetCore
             {
                 app.UseDeveloperExceptionPage();
             }
-
-            app.UseHttpsRedirection();
-
-            app.UseRouting();
-
-            app.UseAuthorization();
-
-            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+            
+            app.UseGraphQLPlayground(null); //options used as per default
         }
     }
 }
