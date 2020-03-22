@@ -1,5 +1,8 @@
 using GraphApiNetCore.GraphQL;
+using GraphApiNetCore.GraphQL.queries;
+using GraphApiNetCore.GraphQL.types;
 using GraphApiNetCore.Repository;
+using GraphApiNetCore.Repository.entities;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -8,6 +11,8 @@ using Microsoft.Extensions.Hosting;
 using GraphQL;
 using GraphQL.Server;
 using GraphQL.Server.Ui.Playground;
+using GraphQL.Types;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
@@ -22,19 +27,31 @@ namespace GraphApiNetCore
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
+        
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
+            // If using Kestrel:
+            services.Configure<KestrelServerOptions>(options =>
+            {
+                options.AllowSynchronousIO = true;
+            });
+
+            // If using IIS:
+            services.Configure<IISServerOptions>(options =>
+            {
+                options.AllowSynchronousIO = true;
+            });
+            
             services.AddDbContext<CarvedRockDbContext>(options =>
                 options.UseSqlServer(Configuration["ConnectionStrings:CarvedRock"]));
 
             services.AddScoped<IDependencyResolver>(s => new FuncDependencyResolver(s.GetRequiredService));
+            
+            services.AddTransient<IRepository, ProductRepository>();
+            
+            services.AddScoped<ProductQuery>();
+            services.AddScoped<ProductGraphType>();
             services.AddScoped<CarvedRockSchema>();
-            
-            services.AddScoped<ProductRepository>();
-            
-            services.AddLogging(builder => builder.AddConsole());
             
             services.AddGraphQL(options =>
                 {
@@ -43,16 +60,11 @@ namespace GraphApiNetCore
                 })
                 .AddGraphTypes(ServiceLifetime.Scoped);
         }
-
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        
+        public void Configure(IApplicationBuilder app, CarvedRockDbContext dbContext)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-            
-            app.UseGraphQLPlayground(null); //options used as per default
+            app.UseGraphQL<CarvedRockSchema>();
+            app.UseGraphQLPlayground(new GraphQLPlaygroundOptions());
         }
     }
 }

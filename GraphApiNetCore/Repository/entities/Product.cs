@@ -6,6 +6,11 @@ namespace GraphApiNetCore.Repository.entities
 {
     public class Product
     {
+        public Product()
+        {
+            
+        }
+        
         public int Id { get; set; }
 
         [StringLength(100)]

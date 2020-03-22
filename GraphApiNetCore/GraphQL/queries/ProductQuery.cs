@@ -1,12 +1,13 @@
 using GraphApiNetCore.GraphQL.types;
 using GraphApiNetCore.Repository;
+using GraphApiNetCore.Repository.entities;
 using GraphQL.Types;
 
 namespace GraphApiNetCore.GraphQL.queries
 {
     public class ProductQuery: ObjectGraphType<ProductGraphType>
     {
-        public ProductQuery(ProductRepository repository)
+        public ProductQuery(IRepository repository)
         {
             Field<ListGraphType<ProductGraphType>>(
                 "products", 
