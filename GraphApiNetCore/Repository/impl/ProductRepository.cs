@@ -18,5 +18,10 @@ namespace GraphApiNetCore.Repository
         {
             return _carvedRockDbContext.Products.ToListAsync();
         }
+
+        public void Dispose()
+        {
+            _carvedRockDbContext?.Dispose();
+        }
     }
 }
