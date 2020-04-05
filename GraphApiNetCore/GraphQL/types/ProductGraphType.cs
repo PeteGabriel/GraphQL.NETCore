@@ -8,9 +8,15 @@ namespace GraphApiNetCore.GraphQL.types
 
         public ProductGraphType()
         {
-            Field(t => t.Id);
-            Field(t => t.Name);
-            Field(t => t.Price);
+            Field(t => t.Id).Description("Id of product");
+            Field(t => t.Name).Description("Name of product");
+            Field(t => t.Price).Description("Price of product");
+            Field(t => t.Rating).Description("Rating");
+            Field(t => t.Stock).Description("Stock");
+            Field(t => t.IntroducedAt).Description("When was first created");;
+            Field(t => t.PhotoFileName);
+            Field<TypeGraphType>(Name= "Type", Description="Type of product");
+
         }
         
     }

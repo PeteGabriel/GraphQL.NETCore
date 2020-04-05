@@ -48,6 +48,28 @@ namespace GraphApiNetCore.Repository
                     Stock = 12,
                     PhotoFileName = "shutterstock_66842440.jpg",
                     IntroducedAt = DateTimeOffset.Now.AddMonths(-1)
+                },
+                new Product {
+                    Id= 2,
+                    Name = "Blue Racer",
+                    Description = "Simply the fastest kayak on earth and beyond for 2 persons.",
+                    Price = 350m,
+                    Rating = 5,
+                    Type = ProductType.Kayaks,
+                    Stock = 8,
+                    PhotoFileName = "shutterstock_441989509.jpg",
+                    IntroducedAt = DateTimeOffset.Now.AddMonths(-1)
+                },
+                new Product {
+                    Id= 3,
+                    Name = "Orange Demon",
+                    Description = "One person kayak with hyper boost button.",
+                    Price = 450m,
+                    Rating = 2,
+                    Type = ProductType.Kayaks,
+                    Stock = 1,
+                    PhotoFileName = "shutterstock_495259978.jpg",
+                    IntroducedAt = DateTimeOffset.Now.AddMonths(-1)
                 }
             );
             
