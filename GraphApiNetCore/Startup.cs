@@ -1,13 +1,16 @@
 using GraphApiNetCore.GraphQL;
 using GraphApiNetCore.GraphQL.queries;
 using GraphApiNetCore.GraphQL.types;
+using GraphApiNetCore.Mdlware;
 using GraphApiNetCore.Repository;
+using GraphApiNetCore.Repository.impl;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using GraphQL;
 using GraphQL.Server;
 using GraphQL.Server.Ui.Playground;
+using Microsoft.AspNetCore.Rewrite;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.EntityFrameworkCore;
 
@@ -36,7 +39,7 @@ namespace GraphApiNetCore
                 options.AllowSynchronousIO = true;
             });
 
-            services.AddEntityFrameworkSqlite().AddDbContext<CarvedRockDbContext>();
+            services.AddDbContext<CarvedRockDbContext>(options => options.UseSqlite("Data Source=carvedrock.db"));
             
             services.AddScoped<IDependencyResolver>(s => new FuncDependencyResolver(s.GetRequiredService));
             
@@ -54,10 +57,11 @@ namespace GraphApiNetCore
                 .AddGraphTypes(ServiceLifetime.Scoped);
         }
         
-        public void Configure(IApplicationBuilder app, CarvedRockDbContext dbContext)
+        public void Configure(IApplicationBuilder app)
         {
             app.UseGraphQL<CarvedRockSchema>();
             app.UseGraphQLPlayground(new GraphQLPlaygroundOptions());
+            //context.Seed();
         }
     }
 }

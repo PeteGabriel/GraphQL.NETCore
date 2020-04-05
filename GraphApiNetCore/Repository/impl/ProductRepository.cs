@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using GraphApiNetCore.Repository.entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace GraphApiNetCore.Repository
+namespace GraphApiNetCore.Repository.impl
 {
     public class ProductRepository: IRepository
     {
