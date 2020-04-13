@@ -18,18 +18,22 @@
 
     <ItemGroup>
       <Compile Remove="Controllers\**" />
+      <Compile Remove="Mdlware\**" />
     </ItemGroup>
 
     <ItemGroup>
       <EmbeddedResource Remove="Controllers\**" />
+      <EmbeddedResource Remove="Mdlware\**" />
     </ItemGroup>
 
     <ItemGroup>
       <None Remove="Controllers\**" />
+      <None Remove="Mdlware\**" />
     </ItemGroup>
 
     <ItemGroup>
       <Content Remove="Controllers\**" />
+      <Content Remove="Mdlware\**" />
     </ItemGroup>
 
 </Project>

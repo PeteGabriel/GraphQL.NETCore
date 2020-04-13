@@ -1,7 +1,6 @@
 using GraphApiNetCore.GraphQL;
 using GraphApiNetCore.GraphQL.queries;
 using GraphApiNetCore.GraphQL.types;
-using GraphApiNetCore.Mdlware;
 using GraphApiNetCore.Repository;
 using GraphApiNetCore.Repository.entities;
 using GraphApiNetCore.Repository.impl;

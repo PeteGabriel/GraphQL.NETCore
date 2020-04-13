@@ -22,8 +22,8 @@ namespace GraphApiNetCore.GraphQL.types
             Field(t => t.Price).Description("Price of product");
             Field(t => t.Rating).Description("Rating");
             Field(t => t.Stock).Description("Stock");
-            Field(t => t.IntroducedAt).Description("When was first created");;
-            Field(t => t.PhotoFileName);
+            Field(t => t.IntroducedAt).Description("When was first created");
+            Field(t => t.PhotoFileName).Description("Photo file name");;
             Field<TypeGraphType>(Name= "Type", Description="Type of product");
 
             Field<ListGraphType<ProductReviewGraphType>>(
