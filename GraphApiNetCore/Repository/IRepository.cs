@@ -5,8 +5,8 @@ using GraphApiNetCore.Repository.entities;
 
 namespace GraphApiNetCore.Repository
 {
-    public interface IRepository: IDisposable
+    public interface IRepository<T>: IDisposable
     {
-        Task<List<Product>> GetProducts();
+        Task<List<T>> All();
     }
 }

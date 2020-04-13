@@ -5,23 +5,18 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GraphApiNetCore.Repository.impl
 {
-    public class ProductRepository: IRepository
+    public class ProductRepository: IRepository<Product>
     {
-        private readonly CarvedRockDbContext _carvedRockDbContext;
+        private readonly CarvedRockDbContext _context;
 
-        public ProductRepository(CarvedRockDbContext dbContext)
-        {
-            this._carvedRockDbContext = dbContext;
-        }
+        public ProductRepository(CarvedRockDbContext dbContext) => _context = dbContext;
 
-        public Task<List<Product>> GetProducts()
-        {
-            return _carvedRockDbContext.Products.ToListAsync();
-        }
+
+        public Task<List<Product>> All() => _context.Products.ToListAsync();
 
         public void Dispose()
         {
-            _carvedRockDbContext?.Dispose();
+            _context?.Dispose();
         }
     }
 }

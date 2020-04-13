@@ -3,6 +3,7 @@ using GraphApiNetCore.GraphQL.queries;
 using GraphApiNetCore.GraphQL.types;
 using GraphApiNetCore.Mdlware;
 using GraphApiNetCore.Repository;
+using GraphApiNetCore.Repository.entities;
 using GraphApiNetCore.Repository.impl;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
@@ -43,7 +44,8 @@ namespace GraphApiNetCore
             
             services.AddScoped<IDependencyResolver>(s => new FuncDependencyResolver(s.GetRequiredService));
             
-            services.AddTransient<IRepository, ProductRepository>();
+            services.AddTransient<IRepository<Product>, ProductRepository>();
+            services.AddTransient<IRepository<ProductReview>, ProductReviewRepository>();
             
             services.AddScoped<ProductQuery>();
             services.AddScoped<ProductGraphType>();
@@ -61,7 +63,6 @@ namespace GraphApiNetCore
         {
             app.UseGraphQL<CarvedRockSchema>();
             app.UseGraphQLPlayground(new GraphQLPlaygroundOptions());
-            //context.Seed();
         }
     }
 }

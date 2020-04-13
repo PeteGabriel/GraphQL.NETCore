@@ -8,6 +8,7 @@ namespace GraphApiNetCore.Repository
     public class CarvedRockDbContext : DbContext
     {
         public DbSet<Product> Products { get; set; }
+        public DbSet<ProductReview> Reviews { get; set; }
 
         private readonly IConfiguration _configuration;
      
@@ -24,6 +25,7 @@ namespace GraphApiNetCore.Repository
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Product>().ToTable("Products");
+            modelBuilder.Entity<ProductReview>().ToTable("Reviews");
             modelBuilder.Entity<Product>(entity =>
             {
                 entity.HasKey(e => e.Id);
@@ -36,10 +38,53 @@ namespace GraphApiNetCore.Repository
                 entity.Property(e => e.IntroducedAt);
                 entity.Property(e => e.PhotoFileName);
             });
+
+            modelBuilder.Entity<ProductReview>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.ProductId).IsRequired();
+                entity.Property(e => e.Title).IsRequired();
+                entity.Property(e => e.Review);
+            });
+            
+            this.SeedProducts(modelBuilder);
+            this.SeedReviews(modelBuilder);
+            
+            base.OnModelCreating(modelBuilder);
+        }
+
+        private void SeedReviews(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<ProductReview>().HasData(
+                new ProductReview
+                {
+                    Id = 1,
+                    ProductId = 1,
+                    Title = "Very good shoes !",
+                    Review = "I've loved them !! Would buy again !"
+                },
+                new ProductReview
+                {
+                    Id = 2,
+                    ProductId = 1,
+                    Title = "Fine but not great..",
+                    Review = "I like them. They are comfortable and such but not pretty."
+                },
+                new ProductReview
+                {
+                    Id = 3,
+                    ProductId = 2,
+                    Title = "Best kayak EVER !",
+                    Review = "I've loved it !! Would buy again !"
+                });
+        }
+        
+        private void SeedProducts(ModelBuilder modelBuilder)
+        {
             modelBuilder.Entity<Product>().HasData(
                 new Product
                 {
-                    Id= 1,
+                    Id = 1,
                     Name = "Mountain Walkers",
                     Description = "Use these sturdy shoes to pass any mountain range with ease.",
                     Price = 219.5m,
@@ -49,8 +94,9 @@ namespace GraphApiNetCore.Repository
                     PhotoFileName = "shutterstock_66842440.jpg",
                     IntroducedAt = DateTimeOffset.Now.AddMonths(-1)
                 },
-                new Product {
-                    Id= 2,
+                new Product
+                {
+                    Id = 2,
                     Name = "Blue Racer",
                     Description = "Simply the fastest kayak on earth and beyond for 2 persons.",
                     Price = 350m,
@@ -60,8 +106,9 @@ namespace GraphApiNetCore.Repository
                     PhotoFileName = "shutterstock_441989509.jpg",
                     IntroducedAt = DateTimeOffset.Now.AddMonths(-1)
                 },
-                new Product {
-                    Id= 3,
+                new Product
+                {
+                    Id = 3,
                     Name = "Orange Demon",
                     Description = "One person kayak with hyper boost button.",
                     Price = 450m,
@@ -72,8 +119,6 @@ namespace GraphApiNetCore.Repository
                     IntroducedAt = DateTimeOffset.Now.AddMonths(-1)
                 }
             );
-            
-            base.OnModelCreating(modelBuilder);
         }
     }
 }

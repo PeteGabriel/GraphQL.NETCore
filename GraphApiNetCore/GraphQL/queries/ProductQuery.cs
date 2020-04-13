@@ -7,11 +7,11 @@ namespace GraphApiNetCore.GraphQL.queries
 {
     public class ProductQuery: ObjectGraphType<ProductGraphType>
     {
-        public ProductQuery(IRepository repository)
+        public ProductQuery(IRepository<Product> repository)
         {
             Field<ListGraphType<ProductGraphType>>(
                 "products", 
-                resolve: context => repository.GetProducts());
+                resolve: context => repository.All());
         }
     }
 }
