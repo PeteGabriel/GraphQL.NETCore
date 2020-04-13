@@ -56,7 +56,8 @@ namespace GraphApiNetCore
                     options.EnableMetrics = true;
                     options.ExposeExceptions = true;
                 })
-                .AddGraphTypes(ServiceLifetime.Scoped);
+                .AddGraphTypes(ServiceLifetime.Scoped)
+                .AddDataLoader();
         }
         
         public void Configure(IApplicationBuilder app)

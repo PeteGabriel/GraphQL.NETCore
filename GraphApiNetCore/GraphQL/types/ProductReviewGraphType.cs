@@ -3,9 +3,9 @@ using GraphQL.Types;
 
 namespace GraphApiNetCore.GraphQL.types
 {
-    public class ProductReviewType : ObjectGraphType<ProductReview>
+    public class ProductReviewGraphType : ObjectGraphType<ProductReview>
     {
-        public ProductReviewType()
+        public ProductReviewGraphType()
         {
             Name="Review";
             Description = "Review related to a product";

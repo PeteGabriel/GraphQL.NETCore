@@ -1,6 +1,10 @@
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using GraphApiNetCore.Repository;
 using GraphApiNetCore.Repository.entities;
 using GraphApiNetCore.Repository.impl;
+using GraphQL.DataLoader;
 using GraphQL.Types;
 
 namespace GraphApiNetCore.GraphQL.types
@@ -8,7 +12,8 @@ namespace GraphApiNetCore.GraphQL.types
     public class ProductGraphType: ObjectGraphType<Product>
     {
 
-        public ProductGraphType(IRepository<ProductReview> prodReviewRepo)
+        public ProductGraphType(IRepository<ProductReview> prodReviewRepo,
+            IDataLoaderContextAccessor dataLoaderContext)
         {
             var reviews = prodReviewRepo as ProductReviewRepository;
             
@@ -21,12 +26,19 @@ namespace GraphApiNetCore.GraphQL.types
             Field(t => t.PhotoFileName);
             Field<TypeGraphType>(Name= "Type", Description="Type of product");
 
-            Field<ListGraphType<ProductReviewType>>(
+            Field<ListGraphType<ProductReviewGraphType>>(
                 "review", 
                 "Reviews related to this product",
-                resolve: ctx => reviews?.FilterByProduct(ctx.Source.Id));
+                resolve: ctx =>
+                {
+                    if (reviews == null) return new ProductReviewGraphType[] { };
+                    
+                    var loader = dataLoaderContext.Context.GetOrAddCollectionBatchLoader<int, ProductReview>(
+                        "GetReviewsByProductId", reviews.FetchByProducts);
+                    return loader.LoadAsync(ctx.Source.Id);
+                });
 
         }
-        
+
     }
 }
