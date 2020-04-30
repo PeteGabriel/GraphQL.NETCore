@@ -45,3 +45,29 @@ Get something like:
   }
 }
 ```
+
+
+Support to find item by id:
+
+```graphql
+{
+  product(id: 1) { 
+    id
+    name
+    price
+  }
+}
+```
+
+```json
+{
+  "data": {
+    "product": {
+        "id": 1,
+        "name": "Mountain Walkers",
+        "price": 219.5
+      }
+  }
+}
+```
+
