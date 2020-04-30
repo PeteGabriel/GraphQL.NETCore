@@ -8,5 +8,7 @@ namespace GraphApiNetCore.Repository
     public interface IRepository<T>: IDisposable
     {
         Task<List<T>> All();
+        
+        Task<T> GetById(int id);
     }
 }
