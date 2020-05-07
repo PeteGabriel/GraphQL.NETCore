@@ -27,7 +27,7 @@ namespace GraphApiNetCore.GraphQL.types
             Field<TypeGraphType>(Name= "Type", Description="Type of product");
 
             Field<ListGraphType<ProductReviewGraphType>>(
-                "review", 
+                "reviews", 
                 "Reviews related to this product",
                 resolve: ctx =>
                 {
