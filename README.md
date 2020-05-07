@@ -1,6 +1,11 @@
 A simple GraphQL api built with .NET Core.
 ----
 
+Overview of types:
+
+![types](https://i.postimg.cc/Px9hCDf6/Untitled-Diagram-vpd-2.png)
+
+
 How to run:
 
 
