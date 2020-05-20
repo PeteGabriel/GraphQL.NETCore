@@ -20,6 +20,13 @@ namespace GraphApiNetCore.Repository.impl
             return _context.Products.Where((product) => product.Id.Equals(id)).FirstOrDefaultAsync();
         }
 
+        public async Task<Product> Add(Product p)
+        {
+            var nT = await _context.Products.AddAsync(p);
+            await _context.SaveChangesAsync();
+            return nT.Entity;
+        }
+
         public void Dispose()
         {
             _context?.Dispose();

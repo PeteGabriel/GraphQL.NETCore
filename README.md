@@ -7,9 +7,11 @@ This is a simple example of an API build with Graphql engine to show the basic c
 
 ### How to run:
 
-...
+tba
 
-Go to __/ui/playground__
+
+### Get Data (Queries)
+
 
 _Query:_
 
@@ -97,3 +99,38 @@ The implementation can be seen inside the class `ProductGraphType.cs` in the res
 ![dl](https://i.postimg.cc/L6zcYdwK/Data-Loader-example.jpg)
 
 
+### Mutate Data 
+
+For a mutation such as one to create a ProductReview resource and in the end show us the id of the new resource.
+
+```graphql
+mutation ($review: productReviewInput!) {
+  createReview(review: $review){
+    id
+  }
+}
+```
+
+We could then create a new one by supplying an input such as:
+
+```json
+{
+  "review": {
+    "title": "My First Review!!!",
+    "review": "This is the content of my First review.",
+    "productId": 3
+  }
+}
+```
+
+The expected result would be:
+
+```graphql
+{
+  "data": {
+    "createReview": {
+      "id": 5
+    }
+  }
+}
+```

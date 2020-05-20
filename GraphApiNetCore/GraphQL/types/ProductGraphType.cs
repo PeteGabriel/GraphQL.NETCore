@@ -11,10 +11,12 @@ namespace GraphApiNetCore.GraphQL.types
 {
     public class ProductGraphType: ObjectGraphType<Product>
     {
-
         public ProductGraphType(IRepository<ProductReview> prodReviewRepo,
             IDataLoaderContextAccessor dataLoaderContext)
         {
+            Name="ProductType";
+            Description = "A product";
+            
             var reviews = prodReviewRepo as ProductReviewRepository;
             
             Field(t => t.Id).Description("Id of product");
@@ -24,7 +26,7 @@ namespace GraphApiNetCore.GraphQL.types
             Field(t => t.Stock).Description("Stock");
             Field(t => t.IntroducedAt).Description("When was first created");
             Field(t => t.PhotoFileName).Description("Photo file name");;
-            Field<TypeGraphType>(Name= "Type", Description="Type of product");
+            Field<TypeGraphType>().Description("Type of product");
 
             Field<ListGraphType<ProductReviewGraphType>>(
                 "reviews", 

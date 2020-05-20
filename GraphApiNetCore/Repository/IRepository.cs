@@ -10,5 +10,7 @@ namespace GraphApiNetCore.Repository
         Task<List<T>> All();
         
         Task<T> GetById(int id);
+
+        Task<T> Add(T t);
     }
 }

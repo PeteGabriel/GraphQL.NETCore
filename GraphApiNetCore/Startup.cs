@@ -48,6 +48,7 @@ namespace GraphApiNetCore
             
             services.AddScoped<ProductQuery>();
             services.AddScoped<ProductGraphType>();
+            
             services.AddScoped<CarvedRockSchema>();
             
             services.AddGraphQL(options =>

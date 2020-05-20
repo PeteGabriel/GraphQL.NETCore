@@ -25,6 +25,13 @@ namespace GraphApiNetCore.Repository.impl
             return _context.Reviews.Where((review) => review.Id.Equals(id)).FirstOrDefaultAsync();
         }
 
+        public async Task<ProductReview> Add(ProductReview t)
+        {
+            var nT = await _context.Reviews.AddAsync(t);
+            await _context.SaveChangesAsync();
+            return nT.Entity;
+        }
+
         public void Dispose()
         {
             _context?.Dispose();
