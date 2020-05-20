@@ -9,7 +9,7 @@ Overview of types:
 
 tbc
 
-Data Loader implementation:
+### Data Loader implementation:
 
 ---
 
@@ -20,6 +20,8 @@ The app fetchs all the products. Now, for each product the app fetchs their revi
 The DataLoader concept is basicaly an intermediary between the app and the database that caches previous results removing the need to query so many times the database for reviews. In this implementation the DL is basicaly a dictionary or more specificaly a `ILookup<int, ProductReview>>`. The type `ILookup` is a key-value storage with search features inside the .NET Core framework.
 
 The implementation can be seen inside the class `ProductGraphType.cs` in the resolver for the field `reviews`.
+
+![dl](https://i.postimg.cc/L6zcYdwK/Data-Loader-example.jpg)
 
 
 How to run:
