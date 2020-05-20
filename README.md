@@ -1,9 +1,9 @@
-## Every platform that can do HTTP requests and process JSON can consume a GraphQL API.
+## "Every platform that can do HTTP requests and process JSON can consume a GraphQL API."
+
 
 This is a simple example of an API build with Graphql engine to show the basic concepts of it.
 
 
-----
 
 ### How to run:
 
