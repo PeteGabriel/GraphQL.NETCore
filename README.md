@@ -1,36 +1,17 @@
-A simple GraphQL api built with .NET Core.
+## Every platform that can do HTTP requests and process JSON can consume a GraphQL API.
+
+This is a simple example of an API build with Graphql engine to show the basic concepts of it.
+
+
 ----
 
-Overview of types:
+### How to run:
 
----
-
-![types](https://i.postimg.cc/Px9hCDf6/Untitled-Diagram-vpd-2.png)
-
-tbc
-
-### Data Loader implementation:
-
----
-
-Let's imagine a query that wants all products and their reviews.
-
-The app fetchs all the products. Now, for each product the app fetchs their review (using the product ID). This process will create an amount of queries to the database equal to _2 times the amount of products_ in the database.
-
-The DataLoader concept is basicaly an intermediary between the app and the database that caches previous results removing the need to query so many times the database for reviews. In this implementation the DL is basicaly a dictionary or more specificaly a `ILookup<int, ProductReview>>`. The type `ILookup` is a key-value storage with search features inside the .NET Core framework.
-
-The implementation can be seen inside the class `ProductGraphType.cs` in the resolver for the field `reviews`.
-
-![dl](https://i.postimg.cc/L6zcYdwK/Data-Loader-example.jpg)
-
-
-How to run:
-
----
+...
 
 Go to __/ui/playground__
 
-Query:
+_Query:_
 
 ```graphql
 {
@@ -42,7 +23,7 @@ Query:
 }
 ```
 
-Result:
+_Result:_
 
 ```json
 {
@@ -91,4 +72,28 @@ query($productId: ID!){
   }
 }
 ```
+
+
+### Overview of types:
+
+---
+
+![types](https://i.postimg.cc/Px9hCDf6/Untitled-Diagram-vpd-2.png)
+
+tbc
+
+### Data Loader implementation:
+
+---
+
+Let's imagine a query that wants all products and their reviews.
+
+The app fetchs all the products. Now, for each product the app fetchs their review (using the product ID). This process will create an amount of queries to the database equal to _2 times the amount of products_ in the database.
+
+The DataLoader concept is basicaly an intermediary between the app and the database that caches previous results removing the need to query so many times the database for reviews. In this implementation the DL is basicaly a dictionary or more specificaly a `ILookup<int, ProductReview>>`. The type `ILookup` is a key-value storage with search features inside the .NET Core framework.
+
+The implementation can be seen inside the class `ProductGraphType.cs` in the resolver for the field `reviews`.
+
+![dl](https://i.postimg.cc/L6zcYdwK/Data-Loader-example.jpg)
+
 
