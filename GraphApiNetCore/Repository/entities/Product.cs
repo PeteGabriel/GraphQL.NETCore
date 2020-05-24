@@ -11,6 +11,7 @@ namespace GraphApiNetCore.Repository.entities
             
         }
         
+        [Key]
         public int Id { get; set; }
 
         [StringLength(100)]

@@ -11,7 +11,10 @@ namespace GraphApiNetCore.GraphQL
         public CarvedRockSchema(IDependencyResolver resolver): base(resolver)
         {
             Query = resolver.Resolve<ProductQuery>();
-            Mutation = resolver.Resolve<ProductReviewMutation>();
+            //Mutation = resolver.Resolve<ProductReviewMutation>();
+            Mutation = resolver.Resolve<ProductMutation>();
+
+            
         }
     }
 }
